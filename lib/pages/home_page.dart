@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<PostProvider>(
-        builder: (context, provider, child) {
+        builder: (context, provider, _) {
           if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator.adaptive());
           } else if (provider.error != null) {
