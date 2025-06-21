@@ -41,6 +41,12 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   provider: ^6.1.5
+  flutter_bloc: ^9.1.1
+  flutter_native_splash: ^2.4.6
+  smooth_page_indicator: ^1.2.1
+  pinput: ^5.0.1
+  carousel_slider: ^5.1.1
+  
 
 
 dev_dependencies:
