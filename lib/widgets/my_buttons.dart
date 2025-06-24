@@ -3,7 +3,7 @@ import 'package:guruh2/core/constants/app_colors.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String title;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final double radius;
   final double height;
   const PrimaryButton({

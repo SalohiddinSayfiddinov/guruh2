@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guruh2/core/constants/app_colors.dart';
-import 'package:guruh2/presentation/auth/data/repository/auth_repo.dart';
 import 'package:guruh2/presentation/auth/presentation/cubit/auth_cubit.dart';
 import 'package:guruh2/presentation/auth/presentation/cubit/auth_state.dart';
 import 'package:guruh2/presentation/auth/presentation/view/verification_email.dart';
@@ -117,8 +116,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => VerificationEmail(
-                          email: _emailController.text.trim(),
+                        builder: (context) => BlocProvider(
+                          create: (context) => AuthCubit(),
+                          child: VerificationEmail(
+                            email: _emailController.text.trim(),
+                          ),
                         ),
                       ),
                     );
@@ -136,20 +138,22 @@ class _SignUpPageState extends State<SignUpPage> {
                     title: state is AuthLoading ? 'Loading...' : 'Register',
                     radius: 48.0,
                     height: 48.0,
-                    onPressed: () async {
-                      setState(() {
-                        isPressed = true;
-                      });
-                      if (_formKey.currentState!.validate() &&
-                          hasLetter(_passwordController.text) &&
-                          hasNumber(_passwordController.text) &&
-                          hasMinLength(_passwordController.text)) {
-                        context.read<AuthCubit>().signUp(
-                              _emailController.text.trim(),
-                              _passwordController.text.trim(),
-                            );
-                      }
-                    },
+                    onPressed: state is AuthLoading
+                        ? null
+                        : () async {
+                            setState(() {
+                              isPressed = true;
+                            });
+                            if (_formKey.currentState!.validate() &&
+                                hasLetter(_passwordController.text) &&
+                                hasNumber(_passwordController.text) &&
+                                hasMinLength(_passwordController.text)) {
+                              context.read<AuthCubit>().signUp(
+                                    _emailController.text.trim(),
+                                    _passwordController.text.trim(),
+                                  );
+                            }
+                          },
                   );
                 },
               ),

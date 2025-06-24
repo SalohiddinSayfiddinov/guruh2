@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guruh2/core/constants/app_colors.dart';
+import 'package:guruh2/presentation/auth/presentation/cubit/auth_cubit.dart';
+import 'package:guruh2/presentation/auth/presentation/cubit/auth_state.dart';
 import 'package:guruh2/widgets/my_buttons.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class VerificationEmail extends StatefulWidget {
   final String email;
@@ -63,7 +67,7 @@ class _VerificationEmailState extends State<VerificationEmail> {
                     margin: EdgeInsets.only(right: 16.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      color: Color(0xFFFAFAFA),
+                      color: Colors.redAccent,
                     ),
                     textStyle: TextStyle(
                       fontSize: 24,
@@ -73,12 +77,41 @@ class _VerificationEmailState extends State<VerificationEmail> {
                   ),
                 ),
                 const SizedBox(height: 24.0),
-                PrimaryButton(
-                  title: 'Continue',
-                  radius: 48.0,
-                  height: 48.0,
-                  onPressed: () {
-                    print(_codeController.text);
+                BlocConsumer<AuthCubit, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.error),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    } else if (state is AuthSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.data),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                      // Navigator to login
+                    }
+                  },
+                  builder: (context, state) {
+                    return PrimaryButton(
+                      title: state is AuthLoading ? 'Loading...' : 'Continue',
+                      radius: 48.0,
+                      height: 48.0,
+                      onPressed: state is AuthLoading
+                          ? null
+                          : () {
+                              if (_codeController.length == 4) {
+                                context.read<AuthCubit>().verify(
+                                      widget.email,
+                                      _codeController.text,
+                                    );
+                              }
+                            },
+                    );
                   },
                 ),
               ],
