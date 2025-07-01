@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guruh2/presentation/auth/presentation/cubit/auth_cubit.dart';
-import 'package:guruh2/presentation/auth/presentation/view/sign_up_page.dart';
+import 'package:guruh2/presentation/home/cubit/category_cubit.dart';
+import 'package:guruh2/presentation/home/view/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +23,11 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: BlocProvider(
-        create: (context) => AuthCubit(),
-        child: const SignUpPage(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => CategoryCubit()),
+        ],
+        child: const HomePage(),
       ),
     );
   }

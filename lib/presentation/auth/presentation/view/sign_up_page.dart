@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guruh2/core/constants/app_colors.dart';
+import 'package:guruh2/core/widgets/app_snack_bar.dart';
 import 'package:guruh2/presentation/auth/presentation/cubit/auth_cubit.dart';
 import 'package:guruh2/presentation/auth/presentation/cubit/auth_state.dart';
 import 'package:guruh2/presentation/auth/presentation/view/verification_email.dart';
@@ -125,12 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     );
                   } else if (state is AuthError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.error),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
+                    AppSnackBar.show(context, state.error);
                   }
                 },
                 builder: (context, state) {

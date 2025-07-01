@@ -1,6 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guruh2/presentation/home/cubit/category_cubit.dart';
+import 'package:guruh2/presentation/home/cubit/category_state.dart';
+import 'package:guruh2/presentation/home/data/models/category_model.dart';
+import 'package:guruh2/presentation/home/data/repo/category_repo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +15,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = PageController();
+  @override
+  void initState() {
+    context.read<CategoryCubit>().getCategories();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -32,42 +41,47 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                final String? token = prefs.getString('token');
+                print(token);
+              },
               icon: const Icon(Icons.notifications_outlined),
             ),
             const SizedBox(width: 12.0)
           ],
         ),
-        body: Column(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                onPageChanged: (index, reason) {},
-                height: 146.0,
-                autoPlay: false,
-                autoPlayAnimationDuration: const Duration(milliseconds: 500),
-                autoPlayInterval: const Duration(milliseconds: 1000),
-                viewportFraction: 1.0,
-                enableInfiniteScroll: false,
-              ),
-              items: [1, 2, 3, 4, 5].map(
-                (e) {
-                  return Container(
-                    width: 327,
-                    color: Colors.amber,
-                    alignment: Alignment.center,
-                    child: Text(
-                      e.toString(),
-                      style: GoogleFonts.poppins(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
+        body: BlocBuilder<CategoryCubit, CategoryState>(
+          builder: (context, state) {
+            if (state is CategoryLoading) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            } else if (state is CategoryError) {
+              return Center(
+                child: Text(
+                  state.error,
+                  style: const TextStyle(fontSize: 40.0, color: Colors.red),
+                ),
+              );
+            } else if (state is CategoryLoaded) {
+              return ListView.builder(
+                itemCount: state.categories.length,
+                itemBuilder: (context, index) {
+                  final CategoryModel category = state.categories[index];
+                  return ListTile(title: Text(category.name));
                 },
-              ).toList(),
-            ),
-          ],
+              );
+            } else {
+              return Center(
+                child: Text(
+                  state.runtimeType.toString(),
+                  style: const TextStyle(fontSize: 40.0),
+                ),
+              );
+            }
+          },
         ),
       ),
     );

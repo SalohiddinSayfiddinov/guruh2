@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:guruh2/core/constants/app_colors.dart';
 import 'package:guruh2/presentation/auth/presentation/cubit/auth_cubit.dart';
 import 'package:guruh2/presentation/auth/presentation/cubit/auth_state.dart';
+import 'package:guruh2/presentation/auth/presentation/view/login_page.dart';
 import 'package:guruh2/widgets/my_buttons.dart';
 import 'package:pinput/pinput.dart';
-import 'package:provider/provider.dart';
 
 class VerificationEmail extends StatefulWidget {
   final String email;
@@ -87,13 +87,15 @@ class _VerificationEmailState extends State<VerificationEmail> {
                         ),
                       );
                     } else if (state is AuthSuccess) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.data),
-                          backgroundColor: Colors.green,
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) => AuthCubit(),
+                            child: const LoginPage(),
+                          ),
                         ),
                       );
-                      // Navigator to login
                     }
                   },
                   builder: (context, state) {
