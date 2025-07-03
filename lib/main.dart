@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guruh2/presentation/home/cubit/category_cubit.dart';
+import 'package:guruh2/presentation/home/cubit/books/category_cubit.dart';
+import 'package:guruh2/presentation/home/cubit/vendors/vendors_categories_cubit.dart';
+import 'package:guruh2/presentation/home/cubit/vendors/vendors_cubit.dart';
 import 'package:guruh2/presentation/home/view/home_page.dart';
 
 void main() async {
@@ -26,6 +28,8 @@ class _MyAppState extends State<MyApp> {
       home: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => CategoryCubit()),
+          BlocProvider(create: (context) => VendorsCubit()),
+          BlocProvider(create: (context) => VendorsCategoriesCubit()),
         ],
         child: const HomePage(),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guruh2/presentation/home/cubit/category_state.dart';
+import 'package:guruh2/presentation/home/cubit/books/category_state.dart';
 import 'package:guruh2/presentation/home/data/repo/category_repo.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {

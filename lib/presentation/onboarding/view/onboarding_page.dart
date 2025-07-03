@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guruh2/core/constants/app_colors.dart';
-import 'package:guruh2/presentation/home/cubit/counter_cubit.dart';
 import 'package:guruh2/presentation/home/view/home_page.dart';
 import 'package:guruh2/presentation/onboarding/cubit/onboarding_cubit.dart';
 import 'package:guruh2/widgets/my_buttons.dart';
@@ -134,10 +133,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => CounterCubit(),
-                              child: const HomePage(),
-                            ),
+                            builder: (context) => const HomePage(),
                           ),
                         );
                       }
