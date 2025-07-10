@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guruh2/presentation/home/cubit/books/category_cubit.dart';
-import 'package:guruh2/presentation/home/cubit/vendors/vendors_categories_cubit.dart';
-import 'package:guruh2/presentation/home/cubit/vendors/vendors_cubit.dart';
-import 'package:guruh2/presentation/home/view/home_page.dart';
+import 'package:guruh2/features/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,14 +21,7 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => CategoryCubit()),
-          BlocProvider(create: (context) => VendorsCubit()),
-          BlocProvider(create: (context) => VendorsCategoriesCubit()),
-        ],
-        child: const HomePage(),
-      ),
+      home: const SplashScreen(),
     );
   }
 }

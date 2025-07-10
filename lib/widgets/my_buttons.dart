@@ -43,7 +43,7 @@ class PrimaryButton extends StatelessWidget {
 
 class SecondaryButton extends StatelessWidget {
   final String title;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   const SecondaryButton({
     super.key,
     required this.title,
