@@ -1,7 +1,7 @@
 class Api {
   Api._();
-  static const String baseUrl = 'https://fastapi-books-app.onrender.com';
-  // static const String baseUrl = 'http://localhost:8000';
+  // static const String baseUrl = 'https://fastapi-books-app.onrender.com';
+  static const String baseUrl = 'http://localhost:8000';
 
   static const String categories = '/categories';
   static const String vendorCategories = '$baseUrl/vendor-categories';
@@ -9,4 +9,7 @@ class Api {
   static const String cart = '$baseUrl/cart';
   static const String cartAdd = '$baseUrl/cart/add';
   static const String books = '$baseUrl/books';
+  static const String authors = '$baseUrl/authors';
+  static const String orders = '$baseUrl/orders';
+  static const String profile = '$baseUrl/auth/profile';
 }
