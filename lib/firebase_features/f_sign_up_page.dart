@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guruh2/firebase_features/cubit/f_auth_cubit.dart';
 import 'package:guruh2/firebase_features/cubit/f_auth_state.dart';
-import 'package:provider/provider.dart';
 
 class FSignUpPage extends StatelessWidget {
   const FSignUpPage({super.key});
