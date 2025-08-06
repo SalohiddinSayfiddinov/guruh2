@@ -51,9 +51,13 @@ dependencies:
   shimmer: ^3.0.0
   image_picker: ^1.1.2
   http_parser: ^4.1.2
-  firebase_core: ^3.15.1
-  firebase_auth: ^5.6.2
-  cloud_firestore: ^5.6.12
+  firebase_core: ^4.0.0
+  firebase_auth: ^6.0.0
+  cloud_firestore: ^6.0.0
+  mask_text_input_formatter: ^2.9.0
+  google_sign_in: ^7.1.1
+  shimmer_ai: ^1.1.1
+  firebase_messaging: ^16.0.0
   
 
 
@@ -61,7 +65,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   build_runner: ^2.4.15
   hive_generator: ^2.0.1
 
@@ -80,7 +84,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-  #   - images/a_dot_ham.jpeg
+    - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -93,13 +97,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
+ 
+  fonts:
+    - family: Figtree
+      fonts:
+        - asset: assets/fonts/Figtree-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Figtree-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Figtree-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Figtree-ExtraBold.ttf
+          weight: 800
+
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf

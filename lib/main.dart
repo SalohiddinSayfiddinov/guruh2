@@ -1,9 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guruh2/features/home/presentation/cubit/note_cubit.dart';
-import 'package:guruh2/features/home/presentation/cubit/user_cubit.dart';
+import 'package:guruh2/core/routes/app_pages.dart';
+import 'package:guruh2/core/routes/app_routes.dart';
+import 'package:guruh2/core/theme/theme_provider.dart';
+import 'package:guruh2/features/home/presentation/cubit/home_cubit.dart';
 import 'package:guruh2/features/home/presentation/pages/home_page.dart';
+import 'package:guruh2/firebase_features/cubit/f_auth_cubit.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
@@ -12,7 +16,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -25,24 +34,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-        datePickerTheme: const DatePickerThemeData(
-          backgroundColor: Colors.white,
-          todayBorder: BorderSide(color: Colors.red),
-          todayBackgroundColor: WidgetStatePropertyAll(Colors.red),
-          todayForegroundColor: WidgetStatePropertyAll(Colors.white),
-        ),
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => UserCubit()),
-          BlocProvider(create: (context) => NoteCubit()),
-        ],
-        child: const HomePage(),
-      ),
+    return Consumer<ThemeProvider>(
+      builder: (context, provider, _) {
+        return MaterialApp(
+          theme: provider.currentTheme,
+          initialRoute: AppPages.signUp,
+          onGenerateRoute: AppRoutes.generateRoute,
+        );
+      },
     );
   }
 }

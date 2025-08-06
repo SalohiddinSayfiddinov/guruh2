@@ -17,3 +17,9 @@ class UserError extends UserState {
 
   UserError({required this.message});
 }
+
+class UserFavsLoaded extends UserState {
+  final List<PlanetModel> planets;
+
+  UserFavsLoaded({required this.planets});
+}
